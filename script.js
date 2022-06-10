@@ -24,12 +24,14 @@ let time = 10;
 let score = 0;
 let palabraAleatoria;
 
+let seguir_jugando = true
 
 // etiquetas HTML
 const h1 = document.querySelector("#randomWord");
 const input = document.querySelector('#text');
 const timeSpan = document.querySelector('#timeSpan')
 const scoreSpan = document.querySelector('#score')
+const end_game_container = document.querySelector("#end-game-container")
 
 // funciones
 function randomWords() {
@@ -40,32 +42,49 @@ function randomWords() {
 function addToDOM() {
   palabraAleatoria= randomWords();
   h1.textContent = palabraAleatoria;
-  // ingresar el tiempo restante en la pagina
-  span_time.textContent = time;
-  // ingresar el puntaje en la pagina
-  span_score.textContent = score;
+  timeSpan.textContent = time;
+  scoreSpan.textContent = score;
 }
 
-// inicio del juego
 addToDOM()
-
-
-input.addEventListener('keyup', function (event) {
-
-  if (event.keyCode == 13) {
-    console.log('Esto es un enter');
-
-    let palabraingresada = input.value;
-
-    if (palabraingresada == palabraAleatoria) {
-      console.log('Ganaste')
-      //tiempo aumente 3 segundos 
-      time += 3;
-      score += 1;
-
-    }
+function updateScore() {
+    score++
   }
 
+// inicio del juego
+
+input.addEventListener('keyup', function (event) {
+ if (seguir_jugando) { // condicion para seguir jugando
+  if (event.keyCode == 13) {
+    if (input.value == palabraAleatoria) {
+        updateScore()
+        time += 3;
+        score += 1;
+      //tiempo aumente 3 segundos 
+    }
+    input.value=""
+    addToDOM()
+  }
+}
 });
+
+// manipulación del tiempo
+const timeInterval = setInterval(function () { 
+    score++  
+    timeSpan.innerHTML = `${score}seg` 
+    if (score == 0) {
+      clearInterval(timeInterval) 
+      gameOver() 
+    }
+  }, 1000)
+  
+  // funcion gameOver se termina el juego
+  function gameOver() {
+    seguir_jugando = false 
+    end_game_container.innerHTML = `
+    ` //se insertan nuevas etiquetas al html para el puntaje y un boton que reinicia el juego, tambien con backstick.
+    
+  };
+
 
 
