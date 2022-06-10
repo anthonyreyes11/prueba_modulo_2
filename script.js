@@ -6,7 +6,6 @@ const words = [
   'flea',
   'aeroplane',
   'peppers',
-
   'unlimited',
   'arcadium',
   'love',
@@ -21,9 +20,10 @@ const words = [
   'chili'
 ];
 // variables globales
-let palabraAleatoria;
 let time = 10;
 let score = 0;
+let palabraAleatoria = randomWords();
+
 
 // etiquetas HTML
 const h1 = document.querySelector("#randomWord");
@@ -37,8 +37,9 @@ function randomWords() {
 }
 
 function addToDOM() {
-  palabraAleatoria = randomWords();
   h1.textContent = palabraAleatoria;
+
+
 }
 
 // inicio del juego
@@ -49,9 +50,14 @@ input.addEventListener('keyup', function (event) {
 
   if (event.keyCode == 13) {
     console.log('Esto es un enter');
+    
+    let palabraingresada = input.value;
 
+    if (palabraingresada == palabraAleatoria) {
+      console.log('Ganaste')
+    
 
-
+    }
   }
 
 
