@@ -1,0 +1,9 @@
+
+.container {
+  border-radius: 40px;
+  width: 20rem;
+  height: 18rem;
+  display: flex;
+  justify-content: center;
+  background-color: aqua;
+}
