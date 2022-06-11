@@ -40,7 +40,7 @@ function randomWords() {
 }
 
 function addToDOM() {
-  palabraAleatoria= randomWords();
+  palabraAleatoria = randomWords();
   h1.textContent = palabraAleatoria;
   timeSpan.textContent = time;
   scoreSpan.textContent = score;
@@ -48,43 +48,60 @@ function addToDOM() {
 
 addToDOM()
 function updateScore() {
-    score++
-  }
+  score++
+}
+
+
 
 // inicio del juego
 
 input.addEventListener('keyup', function (event) {
- if (seguir_jugando) { // condicion para seguir jugando
-  if (event.keyCode == 13) {
-    if (input.value == palabraAleatoria) {
+  if (seguir_jugando) { // condicion para seguir jugando
+    if (event.keyCode == 13) {
+      if (input.value == palabraAleatoria) {
         updateScore()
         time += 3;
-        score += 1;
-      //tiempo aumente 3 segundos 
+        //tiempo aumente 3 segundos 
+      }
+      input.value = ""
+      addToDOM()
     }
-    input.value=""
-    addToDOM()
   }
-}
 });
 
 // manipulación del tiempo
-const timeInterval = setInterval(function () { 
-    score++  
-    timeSpan.innerHTML = `${score}seg` 
-    if (score == 0) {
-      clearInterval(timeInterval) 
-      gameOver() 
-    }
-  }, 1000)
-  
-  // funcion gameOver se termina el juego
-  function gameOver() {
-    seguir_jugando = false 
-    end_game_container.innerHTML = `
-    ` //se insertan nuevas etiquetas al html para el puntaje y un boton que reinicia el juego, tambien con backstick.
+const timeInterval = setInterval(function () {
+  //score++
+  time--
+  timeSpan.innerHTML = `${time}seg`
+  if (time == 0) {
+    clearInterval(timeInterval)
+    gameOver()
+  }
+}, 1000)
+
+//funcion gameOver se termina el juego
+function gameOver() {
+  seguir_jugando = false
+  end_game_container.innerHTML = `
+    <h1>Haz perdido,inténtalo otra vez</h1>
     
-  };
+      <p>puntaje final: ${score}</p>
+<button class= "btnReinicio" onclick="location.reload()">Volver a empezar</button>`
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
